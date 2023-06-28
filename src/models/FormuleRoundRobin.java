@@ -7,6 +7,12 @@ import java.util.Comparator;
 
 public class FormuleRoundRobin implements FormuleChampionnat {
     private List<Match> matchs;
+    private List<Equipe> equipes;
+
+    public FormuleRoundRobin(List<Equipe> equipes, List<Match> matchs){
+        this.equipes = equipes;
+        this.matchs = matchs;
+    }
 
     public void organiserMatches(List<Equipe> equipes) {
         matchs = new ArrayList<>();
@@ -47,7 +53,7 @@ public class FormuleRoundRobin implements FormuleChampionnat {
         }
     }
 
-    public List<Equipe> genererClassement(List<Equipe> equipes, List<Match> matchs) {
+    public List<Equipe> genererClassement() {
         List<Equipe> classement = new ArrayList<>();
 
         // Calcul des scores et classement des équipes
