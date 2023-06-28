@@ -6,11 +6,13 @@ import java.util.List;
 public class Competition {
     private String nom;
     private List<Phase> phases;
+    private PhaseFactory phaseFactory;
 
     // Constructeur
     public Competition(String nom) {
         this.nom = nom;
         this.phases = new ArrayList<>();
+        this.phaseFactory = new PhaseFactory("Phase Nom");
     }
 
     // Getter pour le nom
@@ -24,7 +26,8 @@ public class Competition {
     }
 
     // Méthode pour ajouter une phase
-    public void ajouterPhase(Phase phase) {
+    public void ajouterPhase(String type, int nbPoules, List<Equipe> equipes) {
+        Phase phase = phaseFactory.createPhase(type, nbPoules, equipes);
         this.phases.add(phase);
     }
 
