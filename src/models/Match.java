@@ -5,6 +5,11 @@ public class Match {
     private Equipe equipe2;
     private int scoreEquipe1;
     private int scoreEquipe2;
+
+    // Pour Round Robin
+    private int resultat;
+
+    // Pour élimination direct
     private Equipe equipeGagnante;
 
     // Constructeur
@@ -33,8 +38,18 @@ public class Match {
         return this.scoreEquipe2;
     }
 
+    // Getter pour le résultat (Victoire, défaite ou null)
+    public int getResultat() {
+        return this.resultat;
+    }
+
     // Méthode pour définir les scores
     public void setScore(int scoreEquipe1, int scoreEquipe2) {
+        this.scoreEquipe1 = scoreEquipe1;
+        this.scoreEquipe2 = scoreEquipe2;
+        this.resultat = Integer.compare(scoreEquipe1, scoreEquipe2); // Un résultat négatif indique que l'équipe 1 a
+                                                                     // perdu, un résultat positif indique qu'elle a
+                                                                     // gagné, et zéro indique un match nul.
         this.scoreEquipe1 = scoreEquipe1;
         this.scoreEquipe2 = scoreEquipe2;
         determineGagnant();
