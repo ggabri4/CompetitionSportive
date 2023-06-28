@@ -1,15 +1,17 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 public class FormuleEliminationDirecte implements FormuleChampionnat {
     private Noeud finale;// hypothétiquement, une structure de match qui représente la finale
 
     // Méthode pour organiser des matchs
     public void organiserMatches(List<Equipe> equipes) {
-        
+
         Queue<Noeud> queue = new LinkedList<>();
         for (int i = 0; i < equipes.size(); i += 2) {
             Match match = new Match(equipes.get(i), equipes.get(i + 1));
@@ -32,7 +34,37 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
 
     // Méthode pour générer un classement
     public List<Equipe> genererClassement() {
-        // Implémentation dépendra de la logique spécifique de la génération du classement d'élimination directe
-        return null;
+        List<Equipe> classement = new ArrayList<>();
+
+        Stack<Noeud> stack = new Stack<>();
+        stack.push(finale);
+
+        while (!stack.isEmpty()) {
+            Noeud noeud = stack.pop();
+
+            if (noeud.match.getEquipeGagnante() != null) {
+                // On ajoute l'équipe perdante en première position de la liste
+                if (noeud.match.getEquipeGagnante().equals(noeud.match.getEquipe1())) {
+                    classement.add(0, noeud.match.getEquipe2());
+                } else {
+                    classement.add(0, noeud.match.getEquipe1());
+                }
+            }
+
+            if (noeud.enfantGauche != null) {
+                stack.push(noeud.enfantGauche);
+            }
+
+            if (noeud.enfantDroite != null) {
+                stack.push(noeud.enfantDroite);
+            }
+        }
+
+        // Finalement, on ajoute l'équipe gagnante en première position
+        classement.add(0, finale.match.getEquipeGagnante());
+
+        return classement;
     }
+
+
 }
