@@ -8,5 +8,7 @@ public interface FormuleChampionnat {
     void organiserMatches(List<Equipe> equipes);
 
     // Méthode pour générer un classement
-    List<Equipe> genererClassement();
+    List<Equipe> genererClassement();    
+    List<Match> getMatchs();
+
 }

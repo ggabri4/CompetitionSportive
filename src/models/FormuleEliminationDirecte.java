@@ -66,5 +66,25 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
         return classement;
     }
 
+    public List<Match> getMatchs() {
+        List<Match> matchs = new ArrayList<>();
+        Stack<Noeud> stack = new Stack<>();
+        stack.push(finale);
+        
+        while (!stack.isEmpty()) {
+            Noeud noeud = stack.pop();
+            if (noeud != null) {
+                matchs.add(noeud.match);
+                if (noeud.enfantGauche != null) {
+                    stack.push(noeud.enfantGauche);
+                }
+                if (noeud.enfantDroite != null) {
+                    stack.push(noeud.enfantDroite);
+                }
+            }
+        }
+        
+        return matchs;
+    }
 
 }

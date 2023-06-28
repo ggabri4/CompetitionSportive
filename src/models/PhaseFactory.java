@@ -3,16 +3,11 @@ package models;
 import java.util.List;
 
 public class PhaseFactory {
-    private String nom;
 
-    public PhaseFactory(String nom){
-        this.nom = nom;
-    }
-
-    public Phase createPhase(String type, int nbPoules, List<Equipe> equipes){
+    public Phase createPhase(String nom, String type, int nbPoules, List<Equipe> equipes){
         int equipesParPoule = equipes.size() / nbPoules;
         Phase phase = null;
-        
+
         for (int i = 0; i < nbPoules; i++) {
             List<Equipe> equipesPourCettePoule = equipes.subList(i * equipesParPoule, (i + 1) * equipesParPoule);
             FormuleBuilder builder;

@@ -47,6 +47,11 @@ public class FormuleRoundRobin implements FormuleChampionnat {
             equipes.set(totalEquipes - 1, premiereEquipe);
         }
     }
+    
+    // Méthode pour obtenir la liste des matchs
+    public List<Match> getMatchs() {
+        return matchs;
+    }
 
     public List<Equipe> genererClassement() {
         List<Equipe> classement = new ArrayList<>();
