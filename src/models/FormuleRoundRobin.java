@@ -47,72 +47,77 @@ public class FormuleRoundRobin implements FormuleChampionnat {
         }
     }
 
-    public List<Equipe> genererClassement() {
-        List<ClassementEquipe> classement = new ArrayList<>();
+    public List<Equipe> genererClassement(List<Equipe> equipes, List<Match> matchs) {
+        List<Equipe> classement = new ArrayList<>();
 
         // Calcul des scores et classement des équipes
         for (Equipe equipe : equipes) {
-            ClassementEquipe classementEquipe = new ClassementEquipe(equipe);
+            int points = 0;
+            int victoires = 0;
+            int defaites = 0;
+            int matchsNuls = 0;
+            int butsPour = 0;
+            int butsContre = 0;
 
             for (Match match : matchs) {
                 if (match.getEquipe1().equals(equipe)) {
                     int resultat = match.getResultat();
-                    classementEquipe.butsPour += match.getScoreEquipe1();
-                    classementEquipe.butsContre += match.getScoreEquipe2();
+                    butsPour += match.getScoreEquipe1();
+                    butsContre += match.getScoreEquipe2();
 
                     if (resultat == 1) {
-                        classementEquipe.points += 3;
-                        classementEquipe.victoires++;
+                        points += 3;
+                        victoires++;
                     } else if (resultat == -1) {
-                        classementEquipe.defaites++;
+                        defaites++;
                     } else {
-                        classementEquipe.points++;
-                        classementEquipe.matchsNuls++;
+                        points++;
+                        matchsNuls++;
                     }
                 } else if (match.getEquipe2().equals(equipe)) {
                     int resultat = match.getResultat();
-                    classementEquipe.butsPour += match.getScoreEquipe2();
-                    classementEquipe.butsContre += match.getScoreEquipe1();
+                    butsPour += match.getScoreEquipe2();
+                    butsContre += match.getScoreEquipe1();
 
                     if (resultat == -1) {
-                        classementEquipe.points += 3;
-                        classementEquipe.victoires++;
+                        points += 3;
+                        victoires++;
                     } else if (resultat == 1) {
-                        classementEquipe.defaites++;
+                        defaites++;
                     } else {
-                        classementEquipe.points++;
-                        classementEquipe.matchsNuls++;
+                        points++;
+                        matchsNuls++;
                     }
                 }
             }
 
-            classement.add(classementEquipe);
+            equipe.setPoints(points);
+            equipe.setVictoires(victoires);
+            equipe.setDefaites(defaites);
+            equipe.setMatchsNuls(matchsNuls);
+            equipe.setButsPour(butsPour);
+            equipe.setButsContre(butsContre);
+
+            classement.add(equipe);
         }
 
         // Tri du classement selon les critères (points, différence de buts, buts
         // marqués)
-        Collections.sort(classement, new Comparator<ClassementEquipe>() {
-            public int compare(ClassementEquipe classementEquipe1, ClassementEquipe classementEquipe2) {
-                if (classementEquipe1.points != classementEquipe2.points) {
-                    return classementEquipe2.points - classementEquipe1.points;
-                } else if (classementEquipe1.getDifferenceButs() != classementEquipe2.getDifferenceButs()) {
-                    return classementEquipe2.getDifferenceButs() - classementEquipe1.getDifferenceButs();
+        Collections.sort(classement, new Comparator<Equipe>() {
+            public int compare(Equipe equipe1, Equipe equipe2) {
+                if (equipe1.getPoints() != equipe2.getPoints()) {
+                    return equipe2.getPoints() - equipe1.getPoints();
+                } else if (equipe1.getButsPour() - equipe1.getButsContre() != equipe2.getButsPour()
+                        - equipe2.getButsContre()) {
+                    return (equipe2.getButsPour() - equipe2.getButsContre())
+                            - (equipe1.getButsPour() - equipe1.getButsContre());
                 } else {
-                    return classementEquipe2.butsPour - classementEquipe1.butsPour;
+                    return equipe2.getButsPour() - equipe1.getButsPour();
                 }
             }
         });
 
-        // Conversion des objets ClassementEquipe en objets Equipe pour le classement
-        // final
-        List<Equipe> classementFinal = new ArrayList<>();
-        for (ClassementEquipe classementEquipe : classement) {
-            classementFinal.add(classementEquipe.equipe);
-        }
-
-        return classementFinal;
+        return classement;
     }
-
-    // Classe interne pour stocker les statistiques de
 
 }
