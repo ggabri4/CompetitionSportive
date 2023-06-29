@@ -43,4 +43,8 @@ public class Poule {
     public void setFormule(FormuleChampionnat formule) {
         this.formule = formule;
     }
+
+    public void ajouterEquipes(List<Equipe> equipes) {
+        this.equipes.addAll(equipes);
+    }
 }

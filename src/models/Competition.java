@@ -12,7 +12,8 @@ public class Competition {
     // Constructeur
     public Competition(String nom) {
         this.nom = nom;
-        this.phases = new ArrayList<>();
+        this.phases = new ArrayList<>();        
+        this.equipes = new ArrayList<>();
         this.phaseFactory = new PhaseFactory();
     }
 
@@ -124,6 +125,24 @@ public class Competition {
                     List<Equipe> classement = poule.getFormule().genererClassement();
                     for(int i = 0; i < classement.size(); i++) {
                         System.out.println((i+1) + ". " + classement.get(i).getNom());
+                    }
+                    System.out.println();
+                }
+                System.out.println();
+                break;
+            }
+        }
+    }
+
+    public void afficherMatchs(String nomPhase) {
+        for(Phase phase : phases) {
+            if(phase.getNom().equals(nomPhase)) {
+                System.out.println("Phase : " + phase.getNom());
+                for(Poule poule : phase.getPoules()) {
+                    System.out.println("Poule : " + poule.getNom());
+                    List<Match> matchs = poule.getFormule().getMatchs();
+                    for(Match match : matchs) {
+                        System.out.println(match.getEquipe1().getNom() + " vs " + match.getEquipe2().getNom());
                     }
                     System.out.println();
                 }

@@ -2,7 +2,6 @@ package models;
 
 public class Equipe {
     private String nom;
-    private String categorie;
     private int points;
     private int victoires;
     private int defaites;
@@ -11,9 +10,8 @@ public class Equipe {
     private int butsContre;
 
     // Constructeur
-    public Equipe(String nom, String categorie) {
+    public Equipe(String nom) {
         this.nom = nom;
-        this.categorie = categorie;
         this.points = 0;
         this.victoires = 0;
         this.defaites = 0;
@@ -27,20 +25,11 @@ public class Equipe {
         return this.nom;
     }
 
-    // Getter pour la categorie
-    public String getCategorie() {
-        return this.categorie;
-    }
-
     // Setter pour le nom
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    // Setter pour la categorie
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
 
     // Getter pour les points
     public int getPoints() {

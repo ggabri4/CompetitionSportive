@@ -14,8 +14,14 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
 
         Queue<Noeud> queue = new LinkedList<>();
         for (int i = 0; i < equipes.size(); i += 2) {
-            Match match = new Match(equipes.get(i), equipes.get(i + 1));
-            queue.add(new Noeud(match));
+            if(equipes.size() > i){
+                System.out.println(equipes.get(i).getNom());
+                Match match = new Match(equipes.get(i), equipes.get(i + 1));
+                queue.add(new Noeud(match));
+            }else{
+                System.out.println("Il n'y a pas assez d'équipes");
+            }
+            
         }
 
         while (queue.size() > 1) {

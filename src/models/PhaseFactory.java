@@ -25,6 +25,7 @@ public class PhaseFactory {
             FormuleChampionnat formule = builder.construireFormule();
             phase = new Phase(nom, formule);
             Poule poule = new Poule(nom, formule);
+            poule.ajouterEquipes(equipesPourCettePoule);
             phase.ajouterPoule(poule);
         }
         return phase;
