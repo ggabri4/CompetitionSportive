@@ -7,7 +7,7 @@ public class Match {
     private int scoreEquipe2;
 
     // Pour Round Robin
-    private int resultat;
+    private int resultat = -1; // -1 => pas encore de résultat
 
     // Pour élimination direct
     private Equipe equipeGagnante;
@@ -38,6 +38,14 @@ public class Match {
         return this.scoreEquipe2;
     }
 
+    public void setEquipe1(Equipe equipeGagnante) {
+        this.equipe1 = equipeGagnante;
+    }
+
+    public void setEquipe2(Equipe equipeGagnante) {
+        this.equipe2 = equipeGagnante;
+    }
+
     // Getter pour le résultat (Victoire, défaite ou null)
     public int getResultat() {
         return this.resultat;
@@ -47,9 +55,13 @@ public class Match {
     public void setScore(int scoreEquipe1, int scoreEquipe2) {
         this.scoreEquipe1 = scoreEquipe1;
         this.scoreEquipe2 = scoreEquipe2;
-        this.resultat = Integer.compare(scoreEquipe1, scoreEquipe2); // Un résultat négatif indique que l'équipe 1 a
-                                                                     // perdu, un résultat positif indique qu'elle a
-                                                                     // gagné, et zéro indique un match nul.
+        if(scoreEquipe1>scoreEquipe2)
+            this.resultat = 1;
+        else if(scoreEquipe1<scoreEquipe2)
+            this.resultat = 2;
+        else
+            this.resultat = 3;
+        
         this.scoreEquipe1 = scoreEquipe1;
         this.scoreEquipe2 = scoreEquipe2;
         determineGagnant();

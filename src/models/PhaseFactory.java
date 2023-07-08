@@ -23,8 +23,11 @@ public class PhaseFactory {
             }
 
             FormuleChampionnat formule = builder.construireFormule();
-            phase = new Phase(nom, formule);
-            Poule poule = new Poule(nom, formule);
+
+            if(phase == null)
+                phase = new Phase(nom, formule);
+
+            Poule poule = new Poule("Poule "+i, formule);
             poule.ajouterEquipes(equipesPourCettePoule);
             phase.ajouterPoule(poule);
         }

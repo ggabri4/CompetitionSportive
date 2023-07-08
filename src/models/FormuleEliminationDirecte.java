@@ -12,16 +12,17 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
     // Méthode pour organiser des matchs
     public void organiserMatches(List<Equipe> equipes) {
 
+        if(equipes.size() % 2 == 1){
+            System.out.println("/!\\Le nombre d'équipe dans cette poule est impaire !");
+            System.out.println("Poule(s) non créée(s)");
+            return;
+        }
+        System.out.println("Organisation des matchs pour cette poule :");
         Queue<Noeud> queue = new LinkedList<>();
         for (int i = 0; i < equipes.size(); i += 2) {
-            if(equipes.size() > i){
-                System.out.println(equipes.get(i).getNom());
-                Match match = new Match(equipes.get(i), equipes.get(i + 1));
-                queue.add(new Noeud(match));
-            }else{
-                System.out.println("Il n'y a pas assez d'équipes");
-            }
-            
+            System.out.println("Match : " + equipes.get(i).getNom() + " vs "+ equipes.get(i+1).getNom());
+            Match match = new Match(equipes.get(i), equipes.get(i + 1));
+            queue.add(new Noeud(match));
         }
 
         while (queue.size() > 1) {
@@ -40,6 +41,9 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
 
     // Méthode pour générer un classement
     public List<Equipe> genererClassement() {
+        if(finale == null)
+            return null;
+
         List<Equipe> classement = new ArrayList<>();
 
         Stack<Noeud> stack = new Stack<>();
@@ -71,8 +75,35 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
 
         return classement;
     }
+    public void mettreAJourArbre() {
+        Queue<Noeud> queue = new LinkedList<>();
+        if (finale != null) {
+            queue.add(finale);
+        }
 
+        while (!queue.isEmpty()) {
+            Noeud noeud = queue.poll();
+            Match match = noeud.match;
+
+            if (noeud.enfantGauche != null && noeud.enfantDroite != null) {
+                Match matchEnfantGauche = noeud.enfantGauche.match;
+                Match matchEnfantDroite = noeud.enfantDroite.match;
+
+                if (match.getEquipe1() == null && matchEnfantGauche.getEquipeGagnante() != null) {
+                    match.setEquipe1(matchEnfantGauche.getEquipeGagnante());
+                }
+
+                if (match.getEquipe2() == null && matchEnfantDroite.getEquipeGagnante() != null) {
+                    match.setEquipe2(matchEnfantDroite.getEquipeGagnante());
+                }
+
+                queue.add(noeud.enfantGauche);
+                queue.add(noeud.enfantDroite);
+            }
+        }
+    }
     public List<Match> getMatchs() {
+        mettreAJourArbre();
         List<Match> matchs = new ArrayList<>();
         Stack<Noeud> stack = new Stack<>();
         stack.push(finale);

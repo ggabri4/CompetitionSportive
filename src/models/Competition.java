@@ -54,6 +54,7 @@ public class Competition {
     }
 
     public void entrerResultatMatch(String phaseNom, String equipeGagnante, String equipePerdante) {
+        System.out.println();
         // Cherche la phase par son nom
         Phase phase = phases.stream()
                             .filter(p -> p.getNom().equals(phaseNom))
@@ -61,7 +62,7 @@ public class Competition {
                             .orElse(null);
 
         if (phase == null) {
-            System.out.println("Phase non trouvée.");
+            System.out.println("Phase non trouvée : "+ phaseNom);
             return;
         }
 
@@ -81,10 +82,10 @@ public class Competition {
 
         // Cherche le match qui concerne les deux équipes
         Match match = poule.getFormule().getMatchs().stream()
-                            .filter(m -> (m.getEquipe1().getNom().equals(equipeGagnante) &&
-                                        m.getEquipe2().getNom().equals(equipePerdante)) ||
-                                        (m.getEquipe1().getNom().equals(equipePerdante) &&
-                                        m.getEquipe2().getNom().equals(equipeGagnante)))
+                            .filter(m -> (m.getEquipe1() != null && m.getEquipe1().getNom().equals(equipeGagnante) &&
+                                        m.getEquipe2() != null && m.getEquipe2().getNom().equals(equipePerdante)) ||
+                                        (m.getEquipe1() != null && m.getEquipe1().getNom().equals(equipePerdante) &&
+                                       m.getEquipe2() != null &&  m.getEquipe2().getNom().equals(equipeGagnante)))
                             .findFirst()
                             .orElse(null);
 
@@ -103,12 +104,16 @@ public class Competition {
 
     public void afficherClassement() {
         for(Phase phase : phases) {
-            System.out.println("Phase : " + phase.getNom());
+            System.out.println(phase.getNom() + " : ");
             for(Poule poule : phase.getPoules()) {
-                System.out.println("Poule : " + poule.getNom());
+                System.out.println("\t" + poule.getNom() + " : ");
                 List<Equipe> classement = poule.getFormule().genererClassement();
+                if(classement == null || classement.size() != poule.getEquipes().size()){
+                    System.out.println("\nLe classement n'est pas encore défini");
+                    return;
+                }
                 for(int i = 0; i < classement.size(); i++) {
-                    System.out.println((i+1) + ". " + classement.get(i).getNom());
+                    System.out.println("\t\t"+(i+1) + ". " + classement.get(i).getNom() + "  \t- " + classement.get(i).getPoints() + " points");
                 }
                 System.out.println();
             }
@@ -117,14 +122,21 @@ public class Competition {
     }
 
     public void afficherClassement(String nomPhase) {
+        boolean found = false;
         for(Phase phase : phases) {
             if(phase.getNom().equals(nomPhase)) {
-                System.out.println("Phase : " + phase.getNom());
+                found = true;
+                System.out.println(phase.getNom() + " : ");
                 for(Poule poule : phase.getPoules()) {
-                    System.out.println("Poule : " + poule.getNom());
+                    System.out.println("\t" + poule.getNom() + " : ");
                     List<Equipe> classement = poule.getFormule().genererClassement();
+                    if(classement == null){
+                        System.out.println("Il n'y a pas encore de poules");
+                        return;
+                    }
                     for(int i = 0; i < classement.size(); i++) {
-                        System.out.println((i+1) + ". " + classement.get(i).getNom());
+                        if(classement.get(i) != null)
+                            System.out.println((i+1) + ". " + classement.get(i).getNom() + "  \t- " + classement.get(i).getPoints() + " points");
                     }
                     System.out.println();
                 }
@@ -132,17 +144,28 @@ public class Competition {
                 break;
             }
         }
+        if(!found)
+            System.out.println("Phase '"+nomPhase+"' non trouvée");
     }
 
     public void afficherMatchs(String nomPhase) {
+        boolean found = false;
         for(Phase phase : phases) {
             if(phase.getNom().equals(nomPhase)) {
-                System.out.println("Phase : " + phase.getNom());
+                found = true;
+
+                System.out.println(phase.getNom() + " : ");
                 for(Poule poule : phase.getPoules()) {
-                    System.out.println("Poule : " + poule.getNom());
+                    System.out.println("\t" + poule.getNom() + " : ");
                     List<Match> matchs = poule.getFormule().getMatchs();
                     for(Match match : matchs) {
-                        System.out.println(match.getEquipe1().getNom() + " vs " + match.getEquipe2().getNom());
+                        if(match.getEquipe1() != null)//les équipes sont null pour les matchs futurs
+                        {
+                            if(match.getResultat() != -1)
+                                System.out.println("\t\t"+match.getEquipe1().getNom() + " vs " + match.getEquipe2().getNom() + " ("+match.getScoreEquipe1()+"-"+match.getScoreEquipe2()+")");
+                            else
+                                System.out.println("\t\t"+match.getEquipe1().getNom() + " vs " + match.getEquipe2().getNom());
+                        }
                     }
                     System.out.println();
                 }
@@ -150,5 +173,7 @@ public class Competition {
                 break;
             }
         }
+        if(!found)
+            System.out.println("\nPhase non trouvée");
     }
 }
