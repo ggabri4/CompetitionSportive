@@ -6,10 +6,7 @@ public class Match {
     private int scoreEquipe1;
     private int scoreEquipe2;
 
-    // Pour Round Robin
     private int resultat = -1; // -1 => pas encore de résultat
-
-    // Pour élimination direct
     private Equipe equipeGagnante;
 
     // Constructeur
@@ -51,7 +48,6 @@ public class Match {
         return this.resultat;
     }
 
-    // Méthode pour définir les scores
     public void setScore(int scoreEquipe1, int scoreEquipe2) {
         this.scoreEquipe1 = scoreEquipe1;
         this.scoreEquipe2 = scoreEquipe2;
@@ -67,7 +63,6 @@ public class Match {
         determineGagnant();
     }
 
-    // Méthode pour déterminer le gagnant
     private void determineGagnant() {
         if (scoreEquipe1 > scoreEquipe2) {
             equipeGagnante = equipe1;

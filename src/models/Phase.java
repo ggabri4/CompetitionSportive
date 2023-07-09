@@ -25,12 +25,10 @@ public class Phase {
         return this.poules;
     }
 
-    // Méthode pour ajouter une poule
     public void ajouterPoule(Poule poule) {
         this.poules.add(poule);
     }
 
-    // Méthode pour supprimer une poule
     public void supprimerPoule(Poule poule) {
         this.poules.remove(poule);
     }

@@ -7,9 +7,8 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class FormuleEliminationDirecte implements FormuleChampionnat {
-    private Noeud finale;// hypothétiquement, une structure de match qui représente la finale
+    private Noeud finale;
 
-    // Méthode pour organiser des matchs
     public void organiserMatches(List<Equipe> equipes) {
 
         if(equipes.size() % 2 == 1){
@@ -17,7 +16,9 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
             System.out.println("Poule(s) non créée(s)");
             return;
         }
+
         System.out.println("Organisation des matchs pour cette poule :");
+
         Queue<Noeud> queue = new LinkedList<>();
         for (int i = 0; i < equipes.size(); i += 2) {
             System.out.println("Match : " + equipes.get(i).getNom() + " vs "+ equipes.get(i+1).getNom());
@@ -35,11 +36,9 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
             parent.enfantDroite = noeud2;
             queue.add(parent);
         }
-
         finale = queue.poll();
     }
 
-    // Méthode pour générer un classement
     public List<Equipe> genererClassement() {
         if(finale == null)
             return null;
@@ -70,11 +69,11 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
             }
         }
 
-        // Finalement, on ajoute l'équipe gagnante en première position
         classement.add(0, finale.match.getEquipeGagnante());
 
         return classement;
     }
+
     public void mettreAJourArbre() {
         Queue<Noeud> queue = new LinkedList<>();
         if (finale != null) {
@@ -102,6 +101,7 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
             }
         }
     }
+
     public List<Match> getMatchs() {
         mettreAJourArbre();
         List<Match> matchs = new ArrayList<>();
@@ -120,8 +120,6 @@ public class FormuleEliminationDirecte implements FormuleChampionnat {
                 }
             }
         }
-        
         return matchs;
     }
-
 }

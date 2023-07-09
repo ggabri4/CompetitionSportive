@@ -32,27 +32,23 @@ public class FormuleRoundRobin implements FormuleChampionnat {
             equipes.set(totalEquipes - 1, temp);
         }
     }
-
     
-    // Méthode pour obtenir la liste des matchs
     public List<Match> getMatchs() {
         return matchs;
     }
 
     public List<Equipe> genererClassement() {
-
         System.out.println();
+        
         for (Equipe equipe : this.equipes) {
             equipe.resetScores();
             equipe.calculerScore(matchs);
         }
 
-        // Tri du classement selon les critères (points, différence de buts, buts marqués)
         return equipes.stream()
             .sorted(Comparator.comparing(Equipe::getPoints).reversed()
                     .thenComparing(e -> e.getButsPour() - e.getButsContre(), Comparator.reverseOrder())
                     .thenComparing(Equipe::getButsPour, Comparator.reverseOrder()))
             .collect(Collectors.toList());
     }
-
 }

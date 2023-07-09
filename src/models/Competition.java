@@ -27,13 +27,11 @@ public class Competition {
         return this.phases;
     }
 
-    // Méthode pour ajouter une phase
     public void ajouterPhase(String phaseNom, String type, int nbPoules) {
         Phase phase = phaseFactory.createPhase(phaseNom, type, nbPoules, equipes);
         this.phases.add(phase);
     }
 
-    // Méthode pour supprimer une phase
     public void supprimerPhase(Phase phase) {
         this.phases.remove(phase);
     }
@@ -42,13 +40,11 @@ public class Competition {
     public List<Equipe> getEquipes() {
         return this.equipes;
     }
-
-    // Méthode pour ajouter une équipe   
+ 
     public void ajouterEquipe(Equipe equipe){
         this.equipes.add(equipe);
     }
 
-    // Méthode pour supprimer une équipe
     public void supprimerEquipe(Equipe equipe){
         this.equipes.remove(equipe);
     }

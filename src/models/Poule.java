@@ -24,12 +24,10 @@ public class Poule {
         return this.equipes;
     }
 
-    // Méthode pour ajouter une équipe
     public void ajouterEquipe(Equipe equipe) {
         this.equipes.add(equipe);
     }
 
-    // Méthode pour supprimer une équipe
     public void supprimerEquipe(Equipe equipe) {
         this.equipes.remove(equipe);
     }
