@@ -155,7 +155,7 @@ public class Competition {
                     System.out.println("\t" + poule.getNom() + " : ");
                     List<Match> matchs = poule.getFormule().getMatchs();
                     for(Match match : matchs) {
-                        if(match.getEquipe1() != null)//les équipes sont null pour les matchs futurs
+                        if(match.getEquipe1() != null && match.getEquipe2() != null)//les équipes sont null pour les matchs futurs
                         {
                             if(match.getResultat() != -1)
                                 System.out.println("\t\t"+match.getEquipe1().getNom() + " vs " + match.getEquipe2().getNom() + " ("+match.getScoreEquipe1()+"-"+match.getScoreEquipe2()+")");
