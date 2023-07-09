@@ -15,11 +15,4 @@ public class BuilderRoundRobin implements FormuleBuilder {
         formule.organiserMatches(equipes);
         return formule;
     }
-    
-    // Méthode pour construire des matchs
-    @Override
-    public List<Match> construireMatchs() {
-        // Implémentation dépendra de la logique spécifique de l'organisation des matchs d'élimination directe
-        return null;
-    }
 }
